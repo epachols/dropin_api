@@ -8,6 +8,7 @@ module.exports = function(sequelize, DataTypes) {
 
 //     Hall.associate = function(models) {
 //         // add associations here
+//         // ex: Hall.belongsTo(models.User) as ...
 //         // ex:Hall.hasMany(models.Room);
 //     };
 

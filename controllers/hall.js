@@ -4,7 +4,7 @@ const db = require("../models")
 
 //all routes below start with /api/hall
 router.get("/", (req, res) => {
-    
+    //get all the halls attached to the user with a sent id of req.params, fancy: verify that session user is the right one.
 })
 
 router.post("/", (req, res) => {
@@ -12,6 +12,7 @@ router.post("/", (req, res) => {
         res.status(401).send("login required")
     } 
     else {
+        //TODO:
         //create a hall saving the roomname, db.Hall.create({ key: req.body.key }).then(newHall => {res.json(newHall)}).catch(err) => {console.log(err); res.status(500).end();}
         //password(randomly selected)
         //possibly adding in hall configuration options later (no youtube? color themes? etc. could really shine here)
@@ -32,3 +33,5 @@ router.delete("/:id", (req, res) => {
     //     res.status(500).end();
     // })
 })
+
+module.exports = router
