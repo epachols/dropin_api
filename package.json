@@ -1,0 +1,27 @@
+{
+  "name": "dropin_api",
+  "version": "1.0.0",
+  "description": "API repo for DropIn",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/epachols/dropin_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/epachols/dropin_api/issues"
+  },
+  "homepage": "https://github.com/epachols/dropin_api#readme",
+  "dependencies": {
+    "bcrypt": "^5.0.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "express-session": "^1.17.1",
+    "mysql2": "^2.1.0",
+    "sequelize": "^6.3.4"
+  }
+}
