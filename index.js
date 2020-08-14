@@ -44,7 +44,7 @@ app.use(cors({
 app.use('/',allRoutes);
 
 //TODO: switch between force:true for dev and force:false for live
-db.sequelize.sync({ force: false }).then(function() {
+db.sequelize.sync({ force: true }).then(function() {
     app.listen(PORT, function() {
     console.log('App listening on PORT ' + PORT);
     });
