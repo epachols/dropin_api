@@ -40,7 +40,7 @@ router.delete("/:id", (req, res) => {
         where: {
             id: req.params.id
         }
-    }), then(deletedHall => {
+    }).then(deletedHall => {
         res.json(deletedHall)
     }).catch(err => {
         console.log(err);
