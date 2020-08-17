@@ -3,8 +3,8 @@ const router = express.Router();
 const db = require("../models")
 
 //all routes below start with /api/hall
-router.get("/", (req, res) => {
-    //get all the halls attached to the user with a sent id of req.params, fancy: verify that session user is the right one.
+router.post("/", (req, res) => {
+    
     db.Room.create({
 
         name: req.body.name,
