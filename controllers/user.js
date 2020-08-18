@@ -32,6 +32,7 @@ router.post("/", (req, res) => {
 router.get("/:id", (req, res) => {
     db.User.findOne({
         where: {id:req.params.id}
+        //TODO: change to req.session.id after we save a session object at login. 
     }).then(foundUser =>{
         res.json(foundUser)
     }).catch(err => {
