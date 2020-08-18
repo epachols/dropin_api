@@ -1,6 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models")
+//all routes here will start with /api/users
+
 
 //for creating a new user
 router.post("/", (req, res) => {
@@ -12,10 +14,10 @@ router.post("/", (req, res) => {
 
         db.User.create({
 
-            user_name: req.body.user_name,
-            password: req.body.password,
+            name: req.body.name,
             email: req.body.email,
-            about: req.body.about
+            password: req.body.password,
+            description: req.body.description
             
         }).then(newUser => {
             res.json(newUser)

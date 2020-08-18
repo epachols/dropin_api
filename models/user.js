@@ -1,12 +1,12 @@
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
-        user_name:DataTypes.STRING,
+        name:DataTypes.STRING,
         password:DataTypes.STRING,
         email:{
         type:DataTypes.STRING,
         unique:true,
         },
-        about:DataTypes.STRING
+        description:DataTypes.STRING
     });
 
 //     User.associate = function(models) {
