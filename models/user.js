@@ -1,3 +1,5 @@
+const bcrypt = require('bcrypt')
+
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
         name:DataTypes.STRING,
@@ -14,5 +16,10 @@ module.exports = function(sequelize, DataTypes) {
 //         // ex:Hall.hasMany(models.Room);
 //     };
 
+    //password encryption beforecreate hook
+    User.beforeCreate(function(user){
+        user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null)
+    });
+    
     return User;
 };
