@@ -3,11 +3,11 @@ const router = express.Router();
 const db = require("../models")
 
 //all routes below start with /api/hall
-router.get("/", (req, res) => {
+router.get("/:id", (req, res) => {
     //get all the halls attached to the user with a sent id of req.params, fancy: verify that session user is the right one.
     db.findAll({
         where: {
-            //put joined id logic here
+            //user id = req.params.id (OR req.session.id)
         }
     })
 })
@@ -24,10 +24,10 @@ router.post("/", (req, res) => {
             theme_id: req.body.theme_id
         }).then(newHall => {
             res.json(newHall)
-        }).catch(err) => {
+        }).catch(err => {
             console.log(err);
             res.status(500).end();
-        }
+        })
         //password(randomly selected)
         //possibly adding in hall configuration options later (no youtube? color themes? etc. could really shine here)
     //}

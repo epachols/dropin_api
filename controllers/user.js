@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models")
+const bcrypt = require('bcrypt')
+//all routes here will start with /api/users
+
 
 //for creating a new user
-router.post("/", (req, res) => {
+router.post("/signup", (req, res) => {
     //TODO: enable session user check when login authentication getting up and running.
     // if(!req.session.user){
     //     res.status(401).send("login required")
@@ -12,10 +15,10 @@ router.post("/", (req, res) => {
 
         db.User.create({
 
-            user_name: req.body.user_name,
-            password: req.body.password,
+            name: req.body.name,
             email: req.body.email,
-            about: req.body.about
+            password: req.body.password,
+            description: req.body.description
             
         }).then(newUser => {
             res.json(newUser)
@@ -26,12 +29,21 @@ router.post("/", (req, res) => {
     // }
 })
 
-//This route finds a single user by their ID - useful for after login
-router.get("/:id", (req, res) => {
+//This route finds a single user their email
+router.post("/login", (req, res) => {
     db.User.findOne({
-        where: {id:req.params.id}
-    }).then(foundUser =>{
-        res.json(foundUser)
+        where: {email: req.body.email}
+        //TODO: change to req.session.id after we save a session object at login. 
+    }).then(user =>{
+        if(!user) {
+            res.status(404).send("no such user exists")
+        } else {
+            if(bcrypt.compareSync(req.body.password,user.password)) {
+                res.send("logged in")
+            } else {
+                res.send("wrong password")
+            }
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).end();

@@ -1,12 +1,14 @@
+const bcrypt = require('bcrypt')
+
 module.exports = function(sequelize, DataTypes) {
     var User = sequelize.define('User', {
-        user_name:DataTypes.STRING,
+        name:DataTypes.STRING,
         password:DataTypes.STRING,
         email:{
         type:DataTypes.STRING,
         unique:true,
         },
-        about:DataTypes.STRING
+        description:DataTypes.STRING
     });
 
 //     User.associate = function(models) {
@@ -14,5 +16,10 @@ module.exports = function(sequelize, DataTypes) {
 //         // ex:Hall.hasMany(models.Room);
 //     };
 
+    //password encryption beforecreate hook
+    User.beforeCreate(function(user){
+        user.password= bcrypt.hashSync(user.password, bcrypt.genSaltSync(10), null)
+    });
+    
     return User;
 };
