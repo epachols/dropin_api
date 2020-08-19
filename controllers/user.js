@@ -1,22 +1,23 @@
 const express = require("express");
 const router = express.Router();
 const db = require("../models")
+const bcrypt = require('bcrypt')
+const session = require('express-session')
+//all routes here will start with /api/users
+
 
 //for creating a new user
-router.post("/", (req, res) => {
-    //TODO: enable session user check when login authentication getting up and running.
+router.post("/signup", (req, res) => {
+    //TODO: PUT THIS IN THE HALL ONE BUT NOT USER HERE enable session user check when login authentication getting up and running.
     // if(!req.session.user){
     //     res.status(401).send("login required")
     // }
     // else {
-
         db.User.create({
-
-            user_name: req.body.user_name,
-            password: req.body.password,
+            name: req.body.name,
             email: req.body.email,
-            about: req.body.about
-            
+            password: req.body.password,
+            description: req.body.description   
         }).then(newUser => {
             res.json(newUser)
         }).catch(err => {
@@ -26,16 +27,42 @@ router.post("/", (req, res) => {
     // }
 })
 
-//This route finds a single user by their ID - useful for after login
-router.get("/:id", (req, res) => {
+//This route finds a single user by their email to log them in
+router.post("/login", (req, res) => {
     db.User.findOne({
-        where: {id:req.params.id}
-    }).then(foundUser =>{
-        res.json(foundUser)
+
+        where: {email: req.body.email}
+
+    }).then(user =>{
+
+        if(!user) {
+            res.status(404).send("no such user exists")
+        } else {
+            if(bcrypt.compareSync(req.body.password,user.password)) {
+                req.session.user = {
+                    name:user.name,
+                    email:user.email,
+                    id:user.id
+                }
+
+                console.log("req.session", req.session)
+
+                res.send("logged in")
+            } else {
+                res.status(401).send("wrong password")
+            }
+        }
     }).catch(err => {
         console.log(err);
         res.status(500).end();
     })
 })
+
+//ROUTE FOR USER HOME PAGE
+
+router.get('/readsessions', (req,res)=>{
+    res.json(req.session);
+})
+
 
 module.exports = router
