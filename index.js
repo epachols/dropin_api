@@ -16,18 +16,31 @@ var db = require('./models');
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-
+// ----------------------------------------------------
+//DEVELOPMENT ENVIRONMENT CONFIG
 app.use(cors({
   origin:["http://localhost:3000"],
   credentials:true
 }))
+
+app.use(session({
+    secret: "keyboard cat", 
+    resave: false, 
+    saveUninitialized: false,
+    cookie : {
+      maxAge:2*60*60*1000,
+    }
+}))
+// --------------------------------------------------------
+
+
 //TODO: change the above cors usage for the below for production environment
 // app.use(cors({
 //   origin:["https://fish-tank-react.herokuapp.com"],
 //   credentials:true
 // }))
 
-//TODO: when ready to use session authentication, enable and engage in this. it will need to be updated to use secret ENV instead of the static "cool fellas"
+//TODO: production environment
 // app.use(session({
 //     secret: "cool fellas", 
 //     resave: false, 

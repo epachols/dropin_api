@@ -2,13 +2,17 @@ module.exports = function(sequelize, DataTypes) {
     var Hall = sequelize.define('Hall', {
         name:DataTypes.STRING,
         password:DataTypes.STRING,
-        hall_size:DataTypes.INTEGER,
-        theme_id:DataTypes.STRING,
+        description:DataTypes.STRING,
+        hallSize:DataTypes.INTEGER,
     });
 
 //     Hall.associate = function(models) {
-//         // add associations here
-//         // ex: Hall.belongsTo(models.User) as ...
+    // Hall.belongsTo(models.User { as: "Moderator", foreignKey : "userId" });
+    // Hall.hasMany(models.Room, {
+            //     as: "main",
+            //     foreignKey: "HallId",
+            //     onDelete: "cascade",
+            // });
 //         // ex:Hall.hasMany(models.Room);
 //     };
 
