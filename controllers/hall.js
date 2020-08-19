@@ -21,8 +21,28 @@ router.post("/create", (req, res) => {
             name: req.body.name ,
             password: req.body.password,
             description: req.body.description,
-            hallSize: req.body.hallSize
+            hallSize: req.body.hallSize,
+
+
+            UserId: req.session.user.id
+
+
         }).then(newHall => {
+
+            console.log(newHall.id)
+
+            for (ii=0; ii<newHall.hallSize; ii++) {
+                db.Room.create({
+                    name:`${newHall.name.split(" ").join("")}_${req.session.user.name}_${ii}_${Date.now()}`,
+                    password:newHall.password,
+                    HallId:parseInt(newHall.id)
+                }).then(newRoom => {
+                    console.log(newRoom.name)
+                }).catch(err => {
+                    console.log(err);
+                    res.status(500).end();
+                })
+            }
             res.json(newHall)
         }).catch(err => {
             console.log(err);
