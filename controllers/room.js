@@ -2,9 +2,11 @@ const express = require("express");
 const router = express.Router();
 const db = require("../models")
 
-//all routes below start with /api/hall
+//all routes below start with /api/rooms
 router.post("/", (req, res) => {
-    
+    if (!req.session.user){
+        res.status(401).send("please login first")
+    }
     db.Room.create({
 
         name: req.body.name,

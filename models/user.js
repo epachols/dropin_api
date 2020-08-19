@@ -12,9 +12,19 @@ module.exports = function(sequelize, DataTypes) {
     });
 
 //     User.associate = function(models) {
-//         // add associations here
-//         // ex:Hall.hasMany(models.Room);
-//     };
+        // User.hasMany(models.Hall, {
+        //     as: "Moderator",
+        //     foreignKey: "UserId",
+        //     onDelete: "cascade",
+        // });
+
+         // User.hasMany(models.Room, {
+        //     as: "Moderator",
+        //     foreignKey: "UserId",
+        //     onDelete: "cascade",
+        // });
+
+//};
 
     //password encryption beforecreate hook
     User.beforeCreate(function(user){
