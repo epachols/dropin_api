@@ -58,8 +58,11 @@ router.post("/login", (req, res) => {
     })
 })
 
+//ROUTE FOR USER HOME PAGE
+
 router.get('/readsessions', (req,res)=>{
     res.json(req.session);
 })
+
 
 module.exports = router

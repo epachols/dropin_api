@@ -4,10 +4,11 @@ module.exports = function(sequelize, DataTypes) {
         password:DataTypes.STRING,
     });
 
-//     Room.associate = function(models) {
+    Room.associate = function(models) {
         // Room.belongsTo(models.Hall);
+        Room.belongsTo(models.Hall, {as: "Main", foreignKey: "HallId"});
         // Room.belongsTo(models.User, { as: "Moderator", foreignKey : "userId" })
-//     };
+    };
 
     return Room;
 };

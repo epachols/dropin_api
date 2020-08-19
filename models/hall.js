@@ -6,15 +6,16 @@ module.exports = function(sequelize, DataTypes) {
         hallSize:DataTypes.INTEGER,
     });
 
-//     Hall.associate = function(models) {
-    // Hall.belongsTo(models.User { as: "Moderator", foreignKey : "userId" });
-    // Hall.hasMany(models.Room, {
-            //     as: "main",
-            //     foreignKey: "HallId",
-            //     onDelete: "cascade",
-            // });
-//         // ex:Hall.hasMany(models.Room);
-//     };
+    Hall.associate = function(models) {
+        Hall.hasMany(models.Room, {
+                        as: "Main",
+                        foreignKey: "HallId",
+            //             onDelete: "cascade",
+                    });
+
+        Hall.belongsTo(models.User, { as: "Moderator", foreignKey : "UserId" });
+        // Hall.belongsTo(models.User);
+        };
 
     return Hall;
 };

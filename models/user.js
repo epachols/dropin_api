@@ -11,12 +11,16 @@ module.exports = function(sequelize, DataTypes) {
         description:DataTypes.STRING
     });
 
-//     User.associate = function(models) {
-        // User.hasMany(models.Hall, {
+    User.associate = function(models) {
+       
+        User.hasMany(models.Hall);
+        
+         // User.hasMany(models.Hall, {
         //     as: "Moderator",
         //     foreignKey: "UserId",
         //     onDelete: "cascade",
         // });
+
 
          // User.hasMany(models.Room, {
         //     as: "Moderator",
@@ -24,7 +28,7 @@ module.exports = function(sequelize, DataTypes) {
         //     onDelete: "cascade",
         // });
 
-//};
+};
 
     //password encryption beforecreate hook
     User.beforeCreate(function(user){
