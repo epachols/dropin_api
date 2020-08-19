@@ -37,7 +37,7 @@ app.use(express.json());
 
 //TODO: change the above cors usage for the below for production environment
 app.use(cors({
-  origin:["https://dropinsamine.herokuapp.com/"],
+  origin:["https://dropinsamine.herokuapp.com"],
   credentials:true
 }))
 
