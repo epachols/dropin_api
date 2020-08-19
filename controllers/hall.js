@@ -66,4 +66,26 @@ router.delete("/:id", (req, res) => {
     })
 })
 
+//TODO: ROUTE TO LOAD THE SPECIFIC HALL A USER IS IN, ON HALL CHOICE PAGE. WILL BE ACCESSED FROM USER HOME PAGE.
+router.get("/:id/rooms", (req, res) => {
+  if (!req.session.user) {
+    res.status(401).send("login required to see Hall details");
+  } else {
+    db.Hall.findOne({
+      where: {
+        id: req.params.id,
+      },
+      include: {model: db.Room, as: "Main"},
+    })
+      .then((hall) => {
+        res.json(hall);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).end();
+      });
+  }
+});
+
+
 module.exports = router
