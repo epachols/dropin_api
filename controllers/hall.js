@@ -3,14 +3,6 @@ const router = express.Router();
 const db = require("../models")
 
 //all routes below start with /api/halls
-router.get("/:id", (req, res) => {
-    //get all the halls attached to the user with a sent id of req.params, fancy: verify that session user is the right one.
-    db.findAll({
-        where: {
-            //user id = req.params.id (OR req.session.id)
-        }
-    })
-})
 
 router.post("/create", (req, res) => {
     if (!req.session.user) {
@@ -64,21 +56,43 @@ router.delete("/:id", (req, res) => {
         console.log(err);
         res.status(500).end();
     })
-})
+});
 
-//TODO: ROUTE TO LOAD THE SPECIFIC HALL A USER IS IN, ON HALL CHOICE PAGE. WILL BE ACCESSED FROM USER HOME PAGE.
-router.get("/:id/rooms", (req, res) => {
+// // ROUTE TO LOAD THE SPECIFIC HALL A USER IS IN, ON HALL CHOICE PAGE. WILL Likely BE ACCESSED FROM USER HOME PAGE.
+// router.get("/:id/rooms", (req, res) => {
+//   if (!req.session.user) {
+//     res.status(401).send("login required to see Hall details");
+//   } else {
+//     db.Hall.findOne({
+//       where: {
+//         id: req.params.id,
+//       },
+//       include: {model: db.Room, as: "Main"},
+//     })
+//       .then((hall) => {
+//         res.json(hall);
+//       })
+//       .catch((err) => {
+//         console.log(err);
+//         res.status(500).end();
+//       });
+//   }
+// });
+
+router.get("/allhalls", (req, res) => {
+    
   if (!req.session.user) {
-    res.status(401).send("login required to see Hall details");
+    res.status(401).send("login required to see user hall details");
   } else {
-    db.Hall.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: {model: db.Room, as: "Main"},
+    db.Hall.findAll({
+        //TODO: investigate whether or not using req session user id is bad (maybe from a server restart perspective?)
+      where: { UserId: req.session.user.id },
+      include: { model: db.Room, as: "Main" },
     })
-      .then((hall) => {
-        res.json(hall);
+      .then((allhalls) => {
+        // console.log(allhalls);
+        res.json(allhalls)
+        // res.status(200).end();
       })
       .catch((err) => {
         console.log(err);
@@ -86,6 +100,4 @@ router.get("/:id/rooms", (req, res) => {
       });
   }
 });
-
-
-module.exports = router
+module.exports = router;

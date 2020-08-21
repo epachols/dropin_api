@@ -5,10 +5,6 @@ const bcrypt = require("bcrypt");
 const session = require("express-session");
 //all routes here will start with /api/users
 
-// router.get("/:id", (req,res)=>{
-//     //db.User.findOne({ADDWHEREHERE}).then(foundUser =>{DOSOMETHINGWITHIT,RESJSON}).catch(err=>{console.log(err);res.status(500).end()})
-// })
-
 //for creating a new user
 router.post("/signup", (req, res) => {
   db.User.create({
@@ -41,6 +37,7 @@ router.post("/login", (req, res) => {
             name: user.name,
             email: user.email,
             id: user.id,
+            description: user.description
           };
 
           res.send({ user: req.session.user });
@@ -67,5 +64,34 @@ router.get("/readsessions", (req, res) => {
     res.json({});
   }
 });
+
+
+// GET a single user's account data.
+router.get("/:id/info", (req,res)=>{
+  if (!req.session.user) {
+    res.status(401).send("login required to see account details");
+  } else {
+  db.User.findOne({
+
+    // where: {id: req.session.user.id},
+    where: {id: req.params.id},
+  }).then(foundUser =>{
+
+    const userObj = {
+      id: foundUser.id,
+      name : foundUser.name,
+      email: foundUser.email,
+      description: foundUser.description,
+      createdAt: foundUser.createdAt
+    }
+
+    res.json(userObj) 
+  }).catch(err=>{
+    console.log(err);
+    res.status(500).end()})
+  }
+})
+
+
 
 module.exports = router;
