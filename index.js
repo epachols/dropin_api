@@ -18,41 +18,41 @@ app.use(express.json());
 
 // ----------------------------------------------------
 //DEVELOPMENT ENVIRONMENT CONFIG
-// app.use(cors({
-//   origin:["http://localhost:3000"],
-//   credentials:true
-// }))
+app.use(cors({
+  origin:["http://localhost:3000"],
+  credentials:true
+}))
 
-// app.use(session({
-//   //TODO: make this a secret when going live after dropping the db
-//     secret: "keyboard cat", 
-//     resave: false, 
-//     saveUninitialized: false,
-//     cookie : {
-//       maxAge:2*60*60*1000,
-//     }
-// }))
+app.use(session({
+  //TODO: make this a secret when going live after dropping the db
+    secret: "keyboard cat", 
+    resave: false, 
+    saveUninitialized: false,
+    cookie : {
+      maxAge:2*60*60*1000,
+    }
+}))
 // --------------------------------------------------------
 
 
 //TODO: change the above cors usage for the below for production environment
-app.use(cors({
-  origin:["https://dropinsamine.herokuapp.com"],
-  credentials:true
-}))
+// app.use(cors({
+//   origin:["https://dropinsamine.herokuapp.com"],
+//   credentials:true
+// }))
 
-//TODO: production environment
-app.use(session({
-    secret: "cool fellas", 
-    resave: false, 
-    saveUninitialized: false,
-    proxy:true,
-    cookie : {
-      maxAge:2*60*60*1000,
-      sameSite:"none",
-      secure:true
-    }
-}))
+// //TODO: production environment
+// app.use(session({
+//     secret: "cool fellas", 
+//     resave: false, 
+//     saveUninitialized: false,
+//     proxy:true,
+//     cookie : {
+//       maxAge:2*60*60*1000,
+//       sameSite:"none",
+//       secure:true
+//     }
+// }))
 
 
 app.use('/',allRoutes);
