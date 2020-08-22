@@ -85,9 +85,10 @@ router.get("/allhalls", (req, res) => {
     res.status(401).send("login required to see user hall details");
   } else {
     db.Hall.findAll({
-        //TODO: investigate whether or not using req session user id is bad (maybe from a server restart perspective?)
       where: { UserId: req.session.user.id },
       include: { model: db.Room, as: "Main" },
+      order: [['updatedAt', 'DESC']],
+    // TODO: WANT TO ORDER THE HALLS BY most recently created, thought it 
     })
       .then((allhalls) => {
         // console.log(allhalls);
