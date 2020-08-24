@@ -37,7 +37,7 @@ router.post("/login", (req, res) => {
             name: user.name,
             email: user.email,
             id: user.id,
-            description: user.description
+            description: user.description,
           };
 
           res.send({ user: req.session.user });
@@ -53,8 +53,12 @@ router.post("/login", (req, res) => {
 });
 
 router.get("/logout", (req, res) => {
-  req.session.destroy();
-  res.send("logout complete!");
+  if (!req.session.user) {
+    res.status(401).send("login required to logout");
+  } else {
+    req.session.destroy();
+    res.send("logout complete!");
+  }
 });
 
 router.get("/readsessions", (req, res) => {
@@ -65,33 +69,30 @@ router.get("/readsessions", (req, res) => {
   }
 });
 
-
 // GET a single user's account data.
-router.get("/:id/info", (req,res)=>{
+router.get("/:id/info", (req, res) => {
   if (!req.session.user) {
     res.status(401).send("login required to see account details");
   } else {
-  db.User.findOne({
+    db.User.findOne({
+      where: { id: req.params.id },
+    })
+      .then((foundUser) => {
+        const userObj = {
+          id: foundUser.id,
+          name: foundUser.name,
+          email: foundUser.email,
+          description: foundUser.description,
+          createdAt: foundUser.createdAt,
+        };
 
-    // where: {id: req.session.user.id},
-    where: {id: req.params.id},
-  }).then(foundUser =>{
-
-    const userObj = {
-      id: foundUser.id,
-      name : foundUser.name,
-      email: foundUser.email,
-      description: foundUser.description,
-      createdAt: foundUser.createdAt
-    }
-
-    res.json(userObj) 
-  }).catch(err=>{
-    console.log(err);
-    res.status(500).end()})
+        res.json(userObj);
+      })
+      .catch((err) => {
+        console.log(err);
+        res.status(500).end();
+      });
   }
-})
-
-
+});
 
 module.exports = router;
