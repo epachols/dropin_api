@@ -58,36 +58,17 @@ router.delete("/:id", (req, res) => {
     })
 });
 
-// // ROUTE TO LOAD THE SPECIFIC HALL A USER IS IN, ON HALL CHOICE PAGE. WILL Likely BE ACCESSED FROM USER HOME PAGE.
-// router.get("/:id/rooms", (req, res) => {
-//   if (!req.session.user) {
-//     res.status(401).send("login required to see Hall details");
-//   } else {
-//     db.Hall.findOne({
-//       where: {
-//         id: req.params.id,
-//       },
-//       include: {model: db.Room, as: "Main"},
-//     })
-//       .then((hall) => {
-//         res.json(hall);
-//       })
-//       .catch((err) => {
-//         console.log(err);
-//         res.status(500).end();
-//       });
-//   }
-// });
+
 
 router.get("/allhalls", (req, res) => {
-    
   if (!req.session.user) {
     res.status(401).send("login required to see user hall details");
   } else {
     db.Hall.findAll({
-        //TODO: investigate whether or not using req session user id is bad (maybe from a server restart perspective?)
       where: { UserId: req.session.user.id },
       include: { model: db.Room, as: "Main" },
+      order: [['updatedAt', 'DESC']],
+    // TODO: WANT TO ORDER THE HALLS BY most recently created, thought it 
     })
       .then((allhalls) => {
         // console.log(allhalls);
@@ -100,4 +81,25 @@ router.get("/allhalls", (req, res) => {
       });
   }
 });
+
+// // ROUTE TO LOAD THE SPECIFIC HALL A USER IS IN, ON HALL CHOICE PAGE. WILL Likely BE ACCESSED FROM USER HOME PAGE.
+router.get("/:id", (req, res) => {
+
+  db.Hall.findOne({
+    where: {
+      id: req.params.id,
+    },
+    include: {model: db.Room, as: "Main"},
+  })
+    .then((hall) => {
+      res.json(hall);
+    })
+    .catch((err) => {
+      console.log(err);
+      res.status(500).end();
+    });
+
+});
+
+
 module.exports = router;
