@@ -43,12 +43,12 @@ app.use(cors({
 
 //TODO: production environment
 app.use(session({
-    secret: "cool fellas", 
+    secret: process.env.SESSION_SECRET, 
     resave: false, 
     saveUninitialized: false,
     proxy:true,
     cookie : {
-      maxAge:2*60*60*1000,
+      maxAge:2*60*60*1000, 
       sameSite:"none",
       secure:true
     }
