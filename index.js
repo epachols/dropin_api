@@ -2,6 +2,7 @@
 var express = require('express');
 const cors =require("cors");
 const session = require('express-session')
+require("dotenv").config();
 
 // Sets up the Express App
 // =============================================================
