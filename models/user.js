@@ -13,7 +13,6 @@ module.exports = function(sequelize, DataTypes) {
 
     User.associate = function(models) {
        
-        // User.hasMany(models.Hall);
         
          User.hasMany(models.Hall, {
             as: "Moderator",
@@ -22,11 +21,11 @@ module.exports = function(sequelize, DataTypes) {
         });
 
 
-         // User.hasMany(models.Room, {
-        //     as: "Moderator",
-        //     foreignKey: "UserId",
-        //     onDelete: "cascade",
-        // });
+         User.hasMany(models.Room, {
+            as: "Owner",
+            foreignKey: "UserId",
+            onDelete: "cascade",
+        });
 
 };
 
