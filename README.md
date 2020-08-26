@@ -23,9 +23,7 @@
   ## Usage 
   
 
-  once deployed, this is a server that manages a database for the Videezy web app, a solutions manager to 3d meeting space using react-dnd and the jitsi iframe API. It is usable in the dev environment on localhost:8080 when running a node server instance, and apis called can be tested with the appropriate SQL gui platform or other interface. 
-
-  - ![Preview](na)
+  Once deployed, this is a server that manages a database for the Videezy web app, a solutions manager to 3d meeting space using react-dnd and the jitsi iframe API. It is usable in the dev environment on localhost:8080 when running a node server instance, and apis called can be tested with the appropriate SQL gui platform or other interface. 
   
   
   ## Contributing:
